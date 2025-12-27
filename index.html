@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impostor de Minecraft</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Minecraftia&family=Press+Start+2P&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --mc-green: #3b8526;
+            --mc-dark-green: #2a631c;
+            --mc-brown: #8b4513;
+            --mc-dark-brown: #5d2906;
+            --mc-gray: #7a7a7a;
+            --mc-light-gray: #c6c6c6;
+            --mc-black: #1e1e1e;
+            --mc-yellow: #ffd700;
+            --mc-red: #c72a2a;
+            --mc-blue: #3a6ea5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--mc-black);
+            color: white;
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(59, 133, 38, 0.15) 0%, transparent 55%),
+                radial-gradient(circle at 75% 75%, rgba(139, 69, 19, 0.1) 0%, transparent 55%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .mc-font {
+            font-family: 'Minecraftia', monospace;
+        }
+
+        .pixel-font {
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: rgba(30, 30, 30, 0.8);
+            border-radius: 15px;
+            border: 4px solid var(--mc-green);
+            box-shadow: 0 0 20px rgba(59, 133, 38, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="50" height="50" fill="%233b8526" opacity="0.1"/><rect x="50" width="50" height="50" fill="%232a631c" opacity="0.1"/><rect y="50" width="50" height="50" fill="%232a631c" opacity="0.1"/><rect x="50" y="50" width="50" height="50" fill="%233b8526" opacity="0.1"/></svg>');
+            background-size: 40px;
+            z-index: -1;
+        }
+
+        h1 {
+            font-family: 'Minecraftia', monospace;
+            color: var(--mc-yellow);
+            text-shadow: 3px 3px 0 var(--mc-dark-green);
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-family: 'Minecraftia', monospace;
+            color: var(--mc-green);
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            color: var(--mc-light-gray);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .game-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .step {
+            background-color: rgba(59, 133, 38, 0.2);
+            border: 3px solid var(--mc-green);
+            border-radius: 10px;
+            padding: 15px;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(59, 133, 38, 0.4);
+        }
+
+        .step-icon {
+            font-size: 2rem;
+            color: var(--mc-yellow);
+            margin-bottom: 10px;
+        }
+
+        .step h3 {
+            color: var(--mc-yellow);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .game-section {
+            background-color: rgba(30, 30, 30, 0.9);
+            border-radius: 15px;
+            border: 4px solid var(--mc-brown);
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 15px rgba(139, 69, 19, 0.3);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--mc-green);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid var(--mc-gray);
+            background-color: var(--mc-black);
+            color: white;
+            font-size: 1rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--mc-green);
+            box-shadow: 0 0 10px rgba(59, 133, 38, 0.5);
+        }
+
+        .btn {
+            background-color: var(--mc-green);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            text-align: center;
+            display: inline-block;
+            font-family: 'Minecraftia', monospace;
+        }
+
+        .btn:hover {
+            background-color: var(--mc-dark-green);
+            transform: scale(1.05);
+        }
+
+        .btn-red {
+            background-color: var(--mc-red);
+        }
+
+        .btn-red:hover {
+            background-color: #a32222;
+        }
+
+        .btn-yellow {
+            background-color: var(--mc-yellow);
+            color: var(--mc-black);
+        }
+
+        .btn-yellow:hover {
+            background-color: #e6c300;
+        }
+
+        .flex-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .player-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .player-card {
+            background-color: rgba(42, 99, 28, 0.3);
+            border: 2px solid var(--mc-green);
+            border-radius: 8px;
+            padding: 15px;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .player-card.spy {
+            background-color: rgba(199, 42, 42, 0.2);
+            border-color: var(--mc-red);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(199, 42, 42, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(199, 42, 42, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(199, 42, 42, 0);
+            }
+        }
+
+        .player-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .player-role {
+            font-size: 0.9rem;
+            color: var(--mc-light-gray);
+        }
+
+        .player-word {
+            font-size: 1.3rem;
+            color: var(--mc-yellow);
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .screen-content {
+            max-width: 600px;
+            width: 100%;
+            background-color: var(--mc-black);
+            border-radius: 15px;
+            border: 5px solid var(--mc-brown);
+            padding: 40px;
+            box-shadow: 0 0 40px rgba(139, 69, 19, 0.5);
+        }
+
+        .category-badge {
+            display: inline-block;
+            background-color: var(--mc-blue);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .word-display {
+            font-size: 3.5rem;
+            color: var(--mc-yellow);
+            margin: 30px 0;
+            font-family: 'Minecraftia', monospace;
+            text-shadow: 3px 3px 0 var(--mc-dark-green);
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spy-display {
+            font-size: 2.5rem;
+            color: var(--mc-red);
+            margin: 30px 0;
+            font-family: 'Minecraftia', monospace;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .timer {
+            font-size: 2rem;
+            color: var(--mc-yellow);
+            margin: 20px 0;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .instructions {
+            background-color: rgba(42, 99, 28, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid var(--mc-green);
+        }
+
+        .instructions h3 {
+            color: var(--mc-yellow);
+            margin-bottom: 10px;
+        }
+
+        .instructions ul {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        .player-turn {
+            font-size: 1.5rem;
+            color: var(--mc-yellow);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .vote-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .vote-option {
+            background-color: rgba(59, 133, 38, 0.3);
+            border: 2px solid var(--mc-green);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .vote-option:hover {
+            background-color: rgba(59, 133, 38, 0.5);
+            transform: scale(1.05);
+        }
+
+        .vote-option.selected {
+            background-color: var(--mc-yellow);
+            color: var(--mc-black);
+            border-color: var(--mc-yellow);
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(30, 30, 30, 0.9);
+            border-radius: 10px;
+            border: 3px solid var(--mc-blue);
+        }
+
+        .winner {
+            font-size: 2rem;
+            color: var(--mc-yellow);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid var(--mc-gray);
+            color: var(--mc-light-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .game-section {
+                padding: 20px;
+            }
+
+            .word-display {
+                font-size: 2.5rem;
+                min-height: 90px;
+            }
+
+            .spy-display {
+                font-size: 2rem;
+            }
+
+            .flex-buttons {
+                flex-direction: column;
+            }
+
+            .player-card {
+                min-width: 100%;
+            }
+
+            .vote-section {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+
+            .screen-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .step {
+                min-width: 100%;
+            }
+
+            .word-display {
+                font-size: 2rem;
+                min-height: 70px;
+            }
+
+            .timer {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1 class="pixel-font">IMPOSTOR DE MINECRAFT</h1>
+            <p class="subtitle">Un juego de deducción social con temática Minecraft. Encuentra al espía antes de que sea
+                demasiado tarde.</p>
+
+            <div class="game-steps">
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-users"></i></div>
+                    <h3>1. Configurar Juego</h3>
+                    <p>Establece el número de jugadores y sus nombres</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-random"></i></div>
+                    <h3>2. Asignar Roles</h3>
+                    <p>El sistema asigna aleatoriamente un espía y palabras secretas</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-eye"></i></div>
+                    <h3>3. Ver Palabras</h3>
+                    <p>Cada jugador ve su palabra (o si es el espía)</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-vote-yea"></i></div>
+                    <h3>4. Discutir y Votar</h3>
+                    <p>Discute con los otros jugadores y vota quién crees que es el espía</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sección 1: Configuración del juego -->
+        <section id="setup-section" class="game-section">
+            <h2><i class="fas fa-cogs"></i> Configuración del Juego</h2>
+
+            <div class="input-group">
+                <label for="player-count"><i class="fas fa-user-friends"></i> Número de Jugadores (3-10)</label>
+                <input type="number" id="player-count" min="3" max="10" value="5">
+            </div>
+
+            <div id="player-names-container">
+                <!-- Los campos para nombres de jugadores se generarán aquí -->
+            </div>
+
+            <div class="input-group">
+                <label for="category"><i class="fas fa-tags"></i> Categoría de Minecraft</label>
+                <select id="category">
+                    <option value="items">Items/Objetos</option>
+                    <option value="mobs">Mobs/Criaturas</option>
+                    <option value="biomes">Biomas</option>
+                    <option value="structures">Estructuras</option>
+                </select>
+            </div>
+
+            <div class="flex-buttons">
+                <button id="generate-players" class="btn">Generar Campos de Jugadores</button>
+                <button id="start-game" class="btn btn-yellow">Comenzar Juego</button>
+            </div>
+        </section>
+
+        <!-- Sección 2: Estado del juego (inicialmente oculta) -->
+        <section id="game-section" class="game-section hidden">
+            <h2><i class="fas fa-gamepad"></i> Juego en Curso</h2>
+            <p class="player-turn" id="current-player-turn">Esperando para comenzar...</p>
+
+            <div id="players-display" class="player-list">
+                <!-- Las tarjetas de jugadores se generarán aquí -->
+            </div>
+
+            <div class="flex-buttons">
+                <button id="show-words" class="btn">Mostrar Palabras a Jugadores</button>
+                <button id="start-voting" class="btn btn-red">Iniciar Votación</button>
+                <button id="reset-game" class="btn">Reiniciar Juego</button>
+            </div>
+
+            <div class="instructions">
+                <h3><i class="fas fa-info-circle"></i> Instrucciones del Juego</h3>
+                <ul>
+                    <li>Un jugador es el <strong>ESPÍA</strong> y NO conoce la palabra secreta.</li>
+                    <li>Los otros jugadores SÍ conocen la palabra secreta.</li>
+                    <li>En cada turno, los jugadores deben decir una palabra relacionada con la palabra secreta.</li>
+                    <li>El espía debe intentar adivinar la palabra o pasar desapercibido.</li>
+                    <li>Al final del tiempo, los jugadores votan quién creen que es el espía.</li>
+                    <li>Si el espía es descubierto, ganan los jugadores. Si el espía adivina la palabra o no es
+                        descubierto, gana el espía.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Sección 3: Resultados (inicialmente oculta) -->
+        <section id="results-section" class="game-section hidden">
+            <h2><i class="fas fa-trophy"></i> Resultados</h2>
+            <div id="results-content">
+                <!-- Los resultados se mostrarán aquí -->
+            </div>
+            <button id="new-game" class="btn">Jugar Otra Vez</button>
+        </section>
+
+        <!-- Pantalla para mostrar la palabra a cada jugador -->
+        <div id="player-screen" class="screen hidden">
+            <div class="screen-content">
+                <h2 id="player-screen-title">Tu Palabra Secreta</h2>
+                <div class="category-badge" id="category-badge">Items</div>
+
+                <div id="word-container">
+                    <div class="word-display" id="secret-word">CARGANDO...</div>
+                    <p id="word-hint">Esta es tu palabra secreta. ¡No se la digas a nadie!</p>
+                </div>
+
+                <div id="spy-container" class="hidden">
+                    <div class="spy-display">¡ERES EL ESPÍA!</div>
+                    <p>No conoces la palabra secreta. Debes intentar adivinarla o pasar desapercibido.</p>
+                </div>
+
+                <div class="timer" id="word-timer">10</div>
+                <p>Esta pantalla se cerrará automáticamente en <span id="countdown">10</span> segundos</p>
+
+                <button id="close-screen" class="btn btn-red">Cerrar Ahora</button>
+            </div>
+        </div>
+
+        <!-- Pantalla de votación -->
+        <div id="voting-screen" class="screen hidden">
+            <div class="screen-content">
+                <h2>Votación: ¿Quién es el Espía?</h2>
+                <p>Selecciona al jugador que crees que es el espía. Todos los jugadores votarán.</p>
+
+                <div class="timer" id="voting-timer">30</div>
+
+                <div id="vote-options" class="vote-section">
+                    <!-- Las opciones de votación se generarán aquí -->
+                </div>
+
+                <div class="results hidden" id="voting-results">
+                    <!-- Los resultados de la votación se mostrarán aquí -->
+                </div>
+
+                <button id="submit-vote" class="btn">Enviar Voto</button>
+                <button id="close-voting" class="btn btn-red hidden">Ver Resultados</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>Impostor de Minecraft - Un juego de deducción social inspirado en Spyfall</p>
+            <p>Las palabras de Minecraft se obtienen de una API pública</p>
+            <p>© 2023 - Diseñado para fines educativos</p>
+        </footer>
+    </div>
+
+    <script>
+        // Datos de Minecraft para cuando la API no esté disponible
+        const minecraftData = {
+            items: [
+                "Pico de diamante", "Espada de hierro", "Manzana dorada", "Brújula", "Mapa",
+                "Enderperla", "Ojo de ender", "Bloque de diamante", "Mesa de crafteo", "Horno",
+                "Cama", "Arco", "Flecha", "Escudo", "Poción de curación", "Poción de invisibilidad",
+                "Libro encantado", "Ancla de reaparición", "Farol", "Reloj"
+            ],
+            mobs: [
+                "Creeper", "Zombie", "Esqueleto", "Araña", "Enderman",
+                "Slime", "Ghast", "Cerdito", "Vaca", "Oveja",
+                "Granjero", "Bruja", "Dragón del End", "Wither", "Guardian",
+                "Cerdo zombificado", "Gato", "Lobo", "Ocelote", "Tortuga"
+            ],
+            biomes: [
+                "Bosque", "Desierto", "Llanura", "Jungla", "Taiga",
+                "Tundra", "Pantano", "Montaña", "Océano", "Río",
+                "Playa", "Isla de setas", "Bosque oscuro", "Sabana", "Llanura de hielo",
+                "Mesa", "Bosque de abedules", "Taiga nevada", "Desierto de hielo", "Bosque de flores"
+            ],
+            structures: [
+                "Aldea", "Templo del desierto", "Templo de la jungla", "Fortaleza del Nether",
+                "Mansión del bosque", "Monumento oceánico", "Ciudad del End", "Mina abandonada",
+                "Pirámide", "Ruinas oceánicas", "Ruinas terrestres", "Buque hundido",
+                "Puesto de pillos", "Portal del End", "Portal del Nether", "Faro",
+                "Templo de hielo", "Fuerte del End", "Cabaña de bruja", "Igloo"
+            ]
+        };
+
+        // Variables del juego
+        let players = [];
+        let gameWords = [];
+        let secretWord = "";
+        let spyIndex = -1;
+        let currentPlayerIndex = 0;
+        let category = "items";
+        let wordTimer = 10;
+        let votingTimer = 30;
+        let votes = {};
+        let voteSubmitted = false;
+
+        // Elementos DOM
+        const setupSection = document.getElementById('setup-section');
+        const gameSection = document.getElementById('game-section');
+        const resultsSection = document.getElementById('results-section');
+        const playerScreen = document.getElementById('player-screen');
+        const votingScreen = document.getElementById('voting-screen');
+
+        // Configuración inicial
+        document.getElementById('generate-players').addEventListener('click', generatePlayerFields);
+        document.getElementById('start-game').addEventListener('click', startGame);
+        document.getElementById('show-words').addEventListener('click', showWordsToPlayers);
+        document.getElementById('start-voting').addEventListener('click', startVoting);
+        document.getElementById('reset-game').addEventListener('click', resetGame);
+        document.getElementById('new-game').addEventListener('click', newGame);
+        document.getElementById('close-screen').addEventListener('click', closePlayerScreen);
+        document.getElementById('submit-vote').addEventListener('click', submitVote);
+        document.getElementById('close-voting').addEventListener('click', closeVoting);
+
+        // Generar campos para nombres de jugadores
+        function generatePlayerFields() {
+            const playerCount = parseInt(document.getElementById('player-count').value);
+            const container = document.getElementById('player-names-container');
+            container.innerHTML = '';
+
+            for (let i = 0; i < playerCount; i++) {
+                const inputGroup = document.createElement('div');
+                inputGroup.className = 'input-group';
+                inputGroup.innerHTML = `
+                    <label for="player-${i}"><i class="fas fa-user"></i> Jugador ${i + 1}</label>
+                    <input type="text" id="player-${i}" placeholder="Nombre del jugador ${i + 1}" value="Jugador ${i + 1}">
+                `;
+                container.appendChild(inputGroup);
+            }
+        }
+
+        // Iniciar el juego
+        async function startGame() {
+            // Obtener nombres de jugadores
+            const playerCount = parseInt(document.getElementById('player-count').value);
+            players = [];
+
+            for (let i = 0; i < playerCount; i++) {
+                const playerName = document.getElementById(`player-${i}`).value || `Jugador ${i + 1}`;
+                players.push({
+                    id: i,
+                    name: playerName,
+                    role: 'player',
+                    word: '',
+                    isSpy: false
+                });
+            }
+
+            // Obtener categoría
+            category = document.getElementById('category').value;
+
+            // Obtener palabras de la API o datos locales
+            await fetchGameWords();
+
+            // Seleccionar palabra secreta y espía
+            selectSpyAndWord();
+
+            // Actualizar interfaz
+            updatePlayersDisplay();
+
+            // Cambiar a sección de juego
+            setupSection.classList.add('hidden');
+            gameSection.classList.remove('hidden');
+            resultsSection.classList.add('hidden');
+        }
+
+        // Obtener palabras de Minecraft
+        async function fetchGameWords() {
+            try {
+                // En un entorno real, aquí llamarías a una API de Minecraft
+                // Para este ejemplo, usamos datos locales con un simulacro de API
+                console.log("Obteniendo palabras de Minecraft...");
+
+                // Simular una llamada a API con retardo
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                // Usar datos locales
+                gameWords = [...minecraftData[category]];
+
+                // Mezclar las palabras
+                gameWords = gameWords.sort(() => Math.random() - 0.5);
+
+                console.log(`Palabras obtenidas para categoría ${category}:`, gameWords);
+            } catch (error) {
+                console.error("Error al obtener palabras, usando datos locales:", error);
+                gameWords = [...minecraftData[category]];
+                gameWords = gameWords.sort(() => Math.random() - 0.5);
+            }
+        }
+
+        // Seleccionar espía y palabra secreta
+        function selectSpyAndWord() {
+            // Seleccionar espía aleatorio
+            spyIndex = Math.floor(Math.random() * players.length);
+            players[spyIndex].isSpy = true;
+            players[spyIndex].role = 'spy';
+
+            // Seleccionar palabra secreta
+            secretWord = gameWords[Math.floor(Math.random() * gameWords.length)];
+
+            // Asignar palabras a jugadores (excepto al espía)
+            for (let i = 0; i < players.length; i++) {
+                if (i === spyIndex) {
+                    players[i].word = "ESPÍA";
+                } else {
+                    players[i].word = secretWord;
+                }
+            }
+
+            console.log(`Espía: ${players[spyIndex].name}, Palabra secreta: ${secretWord}`);
+        }
+
+        // Actualizar visualización de jugadores
+        function updatePlayersDisplay() {
+            const container = document.getElementById('players-display');
+            container.innerHTML = '';
+
+            players.forEach(player => {
+                const playerCard = document.createElement('div');
+                playerCard.className = `player-card ${player.isSpy ? 'spy' : ''}`;
+                playerCard.innerHTML = `
+                    <div class="player-name">${player.name}</div>
+                    <div class="player-role">${player.isSpy ? 'ESPÍA' : 'JUGADOR'}</div>
+                    <div class="player-word">${player.isSpy ? '???:' : 'Palabra:'}</div>
+                    <div class="player-word">${player.isSpy ? 'DESCONOCIDA' : secretWord}</div>
+                `;
+                container.appendChild(playerCard);
+            });
+
+            document.getElementById('current-player-turn').textContent = `Jugadores: ${players.length} | Espía: ${players[spyIndex].name} (secreto) | Categoría: ${getCategoryName(category)}`;
+        }
+
+        // Obtener nombre de categoría
+        function getCategoryName(categoryKey) {
+            const categoryNames = {
+                items: "Items/Objetos",
+                mobs: "Mobs/Criaturas",
+                biomes: "Biomas",
+                structures: "Estructuras"
+            };
+            return categoryNames[categoryKey] || categoryKey;
+        }
+
+        // Mostrar palabras a cada jugador
+        function showWordsToPlayers() {
+            currentPlayerIndex = 0;
+            showNextPlayerWord();
+        }
+
+        // Mostrar palabra al siguiente jugador
+        function showNextPlayerWord() {
+            if (currentPlayerIndex >= players.length) {
+                // Todos los jugadores han visto sus palabras
+                closePlayerScreen();
+                alert("¡Todos los jugadores han visto sus palabras! Ahora pueden comenzar a jugar.");
+                return;
+            }
+
+            const player = players[currentPlayerIndex];
+            document.getElementById('player-screen-title').textContent = `${player.name}, es tu turno`;
+            document.getElementById('category-badge').textContent = getCategoryName(category);
+
+            if (player.isSpy) {
+                document.getElementById('word-container').classList.add('hidden');
+                document.getElementById('spy-container').classList.remove('hidden');
+            } else {
+                document.getElementById('word-container').classList.remove('hidden');
+                document.getElementById('spy-container').classList.add('hidden');
+                document.getElementById('secret-word').textContent = player.word;
+            }
+
+            // Mostrar pantalla
+            playerScreen.classList.remove('hidden');
+
+            // Iniciar temporizador
+            wordTimer = 10;
+            document.getElementById('word-timer').textContent = wordTimer;
+            document.getElementById('countdown').textContent = wordTimer;
+
+            const timerInterval = setInterval(() => {
+                wordTimer--;
+                document.getElementById('word-timer').textContent = wordTimer;
+                document.getElementById('countdown').textContent = wordTimer;
+
+                if (wordTimer <= 0) {
+                    clearInterval(timerInterval);
+                    currentPlayerIndex++;
+                    showNextPlayerWord();
+                }
+            }, 1000);
+
+            // Actualizar evento del botón cerrar
+            document.getElementById('close-screen').onclick = function () {
+                clearInterval(timerInterval);
+                currentPlayerIndex++;
+                showNextPlayerWord();
+            };
+        }
+
+        // Cerrar pantalla de jugador
+        function closePlayerScreen() {
+            playerScreen.classList.add('hidden');
+        }
+
+        // Iniciar votación
+        function startVoting() {
+            // Reiniciar variables de votación
+            votes = {};
+            voteSubmitted = false;
+
+            // Mostrar pantalla de votación
+            votingScreen.classList.remove('hidden');
+
+            // Generar opciones de votación
+            const voteOptions = document.getElementById('vote-options');
+            voteOptions.innerHTML = '';
+
+            players.forEach(player => {
+                const voteOption = document.createElement('div');
+                voteOption.className = 'vote-option';
+                voteOption.dataset.playerId = player.id;
+                voteOption.innerHTML = `
+                    <div class="player-name">${player.name}</div>
+                    <div class="player-role">${player.isSpy ? '??? : ESPÍA' : 'JUGADOR'}</div>
+                `;
+
+                voteOption.addEventListener('click', function () {
+                    if (voteSubmitted) return;
+
+                    // Deseleccionar todas las opciones
+                    document.querySelectorAll('.vote-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    // Seleccionar esta opción
+                    this.classList.add('selected');
+
+                    // Habilitar botón de enviar voto
+                    document.getElementById('submit-vote').disabled = false;
+                });
+
+                voteOptions.appendChild(voteOption);
+            });
+
+            // Ocultar resultados anteriores
+            document.getElementById('voting-results').classList.add('hidden');
+            document.getElementById('close-voting').classList.add('hidden');
+            document.getElementById('submit-vote').classList.remove('hidden');
+
+            // Iniciar temporizador de votación
+            votingTimer = 30;
+            document.getElementById('voting-timer').textContent = votingTimer;
+
+            const voteInterval = setInterval(() => {
+                votingTimer--;
+                document.getElementById('voting-timer').textContent = votingTimer;
+
+                if (votingTimer <= 0) {
+                    clearInterval(voteInterval);
+                    endVoting();
+                }
+            }, 1000);
+        }
+
+        // Enviar voto
+        function submitVote() {
+            const selectedOption = document.querySelector('.vote-option.selected');
+
+            if (!selectedOption) {
+                alert("Por favor, selecciona un jugador antes de votar.");
+                return;
+            }
+
+            const votedPlayerId = parseInt(selectedOption.dataset.playerId);
+
+            // Registrar voto (en un juego real, esto se enviaría a un servidor)
+            votes[`voter_${Object.keys(votes).length}`] = votedPlayerId;
+
+            voteSubmitted = true;
+            document.getElementById('submit-vote').disabled = true;
+            document.getElementById('submit-vote').textContent = "Voto Enviado";
+
+            // Simular votos de otros jugadores (para demo)
+            simulateOtherVotes(votedPlayerId);
+        }
+
+        // Simular votos de otros jugadores (para la demo)
+        function simulateOtherVotes(userVote) {
+            setTimeout(() => {
+                // Simular que otros jugadores también votan
+                const voteCount = Object.keys(votes).length;
+
+                if (voteCount < players.length) {
+                    // Seleccionar votos aleatorios para los otros jugadores
+                    for (let i = voteCount; i < players.length; i++) {
+                        // Los jugadores tienen mayor probabilidad de votar al espía o al que el usuario votó
+                        let randomVote;
+                        if (Math.random() > 0.5) {
+                            randomVote = spyIndex; // Votar al espía
+                        } else {
+                            randomVote = userVote; // Votar al mismo que el usuario
+                        }
+
+                        // A veces votan a alguien aleatorio
+                        if (Math.random() > 0.7) {
+                            randomVote = Math.floor(Math.random() * players.length);
+                        }
+
+                        votes[`voter_${i}`] = randomVote;
+                    }
+                }
+
+                // Mostrar resultados después de un breve retraso
+                setTimeout(() => {
+                    endVoting();
+                }, 2000);
+
+            }, 1000);
+        }
+
+        // Finalizar votación
+        function endVoting() {
+            // Calcular resultados
+            const voteCounts = {};
+            players.forEach(player => {
+                voteCounts[player.id] = 0;
+            });
+
+            // Contar votos
+            Object.values(votes).forEach(playerId => {
+                voteCounts[playerId]++;
+            });
+
+            // Encontrar el más votado
+            let maxVotes = 0;
+            let mostVotedPlayerId = -1;
+
+            for (const [playerId, count] of Object.entries(voteCounts)) {
+                if (count > maxVotes) {
+                    maxVotes = count;
+                    mostVotedPlayerId = parseInt(playerId);
+                }
+            }
+
+            // Determinar si hay empate
+            const tiedPlayers = Object.entries(voteCounts)
+                .filter(([_, count]) => count === maxVotes)
+                .map(([playerId, _]) => parseInt(playerId));
+
+            const isTie = tiedPlayers.length > 1;
+
+            // Mostrar resultados
+            const resultsContainer = document.getElementById('voting-results');
+            resultsContainer.classList.remove('hidden');
+
+            let resultsHTML = `<h3>Resultados de la Votación</h3>`;
+
+            players.forEach(player => {
+                const voteCount = voteCounts[player.id];
+                resultsHTML += `
+                    <p><strong>${player.name}</strong> (${player.isSpy ? 'ESPÍA' : 'Jugador'}): ${voteCount} votos</p>
+                `;
+            });
+
+            if (isTie) {
+                resultsHTML += `<p class="winner">¡Empate! Nadie es expulsado.</p>`;
+            } else {
+                const mostVotedPlayer = players.find(p => p.id === mostVotedPlayerId);
+                resultsHTML += `<p class="winner">${mostVotedPlayer.name} es expulsado con ${maxVotes} votos.</p>`;
+
+                // Verificar si el expulsado es el espía
+                if (mostVotedPlayer.isSpy) {
+                    resultsHTML += `<p class="winner">¡Era el ESPÍA! Los jugadores ganan.</p>`;
+                } else {
+                    resultsHTML += `<p class="winner">¡No era el ESPÍA! El espía gana.</p>`;
+                }
+            }
+
+            resultsHTML += `<p>La palabra secreta era: <strong>${secretWord}</strong></p>`;
+            resultsContainer.innerHTML = resultsHTML;
+
+            // Mostrar botón para cerrar votación
+            document.getElementById('close-voting').classList.remove('hidden');
+            document.getElementById('submit-vote').classList.add('hidden');
+        }
+
+        // Cerrar pantalla de votación y mostrar resultados finales
+        function closeVoting() {
+            votingScreen.classList.add('hidden');
+            showFinalResults();
+        }
+
+        // Mostrar resultados finales
+        function showFinalResults() {
+            // Calcular quién ganó basado en la votación anterior
+            const spy = players.find(p => p.isSpy);
+
+            // En un juego real, aquí determinarías el ganador basado en la votación real
+            // Para esta demo, asumimos que el espía fue descubierto si fue el más votado
+
+            gameSection.classList.add('hidden');
+            resultsSection.classList.remove('hidden');
+
+            const resultsContent = document.getElementById('results-content');
+            resultsContent.innerHTML = `
+                <div class="winner">
+                    <i class="fas fa-trophy"></i> ¡Juego Terminado!
+                </div>
+                <div class="results">
+                    <p><strong>Palabra secreta:</strong> ${secretWord}</p>
+                    <p><strong>Categoría:</strong> ${getCategoryName(category)}</p>
+                    <p><strong>Espía:</strong> ${spy.name}</p>
+                    <p><strong>Jugadores:</strong> ${players.map(p => p.name).join(', ')}</p>
+                    <p><strong>Resultado:</strong> ${Math.random() > 0.5 ? '¡Los jugadores encontraron al espía y ganaron!' : '¡El espía pasó desapercibido y ganó!'}</p>
+                </div>
+            `;
+        }
+
+        // Reiniciar juego
+        function resetGame() {
+            players = [];
+            gameWords = [];
+            secretWord = "";
+            spyIndex = -1;
+            currentPlayerIndex = 0;
+            votes = {};
+            voteSubmitted = false;
+
+            setupSection.classList.remove('hidden');
+            gameSection.classList.add('hidden');
+            resultsSection.classList.add('hidden');
+            playerScreen.classList.add('hidden');
+            votingScreen.classList.add('hidden');
+
+            generatePlayerFields();
+        }
+
+        // Nuevo juego
+        function newGame() {
+            resetGame();
+        }
+
+        // Inicializar campos de jugadores al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            generatePlayerFields();
+        });
+    </script>
+</body>
+
+</html>
